@@ -929,7 +929,7 @@
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
 
-	var/revive_time = 900
+	var/revive_time = 90 SECONDS
 	var/mob/living/carbon/human/cloth_golem
 
 CREATION_TEST_IGNORE_SUBTYPES(/obj/structure/cloth_pile)
@@ -974,7 +974,7 @@ CREATION_TEST_IGNORE_SUBTYPES(/obj/structure/cloth_pile)
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
 	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
-	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
+	if(cloth_golem.revive(HEAL_ALL))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)
 	cloth_golem.forceMove(get_turf(src))
@@ -1139,7 +1139,7 @@ CREATION_TEST_IGNORE_SUBTYPES(/obj/structure/cloth_pile)
 			to_chat(H, span_notice("You create a new cardboard golem shell."))
 			create_brother(H.loc)
 
-/datum/species/golem/cardboard/proc/create_brother(var/location)
+/datum/species/golem/cardboard/proc/create_brother(location)
 	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
