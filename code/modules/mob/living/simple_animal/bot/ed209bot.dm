@@ -529,8 +529,9 @@ CREATION_TEST_IGNORE_SUBTYPES(/mob/living/simple_animal/bot/ed209)
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	C.Paralyze(100)
-	C.stuttering = 5
+	var/armor_block = C.run_armor_check(BODY_ZONE_CHEST, "stamina")
+	C.apply_damage(60, STAMINA, BODY_ZONE_CHEST, armor_block)
+	C.apply_effect(EFFECT_STUTTER, 50)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		var/judgment_criteria = judgment_criteria()
