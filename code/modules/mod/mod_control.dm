@@ -35,6 +35,8 @@
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
 	var/skin = "standard"
+	// Item flags, for now it just shouldnt be glued
+	item_flags = NO_GLUE
 	/// Theme of the MOD TGUI
 	var/ui_theme = "ntos"
 	/// If the suit is deployed and turned on.
