@@ -10,3 +10,6 @@
   - bugfix: Fixed the heretic midround not having a minimum player requirement, resulting
       in them being unable to complete objectives due to lack of targets (It is now
       14, same as their roundstart counterpart)
+2026-09-05:
+  r1ks-iwnl:
+  - bugfix: Fixes loadout accessory backpacks(cyborg ones) not spawning
