@@ -1,0 +1,5 @@
+author: Geatish
+delete-after: true
+changes:
+  - bugfix: You can now craft the voice modulator mask again, now with both the old
+      and new mask
