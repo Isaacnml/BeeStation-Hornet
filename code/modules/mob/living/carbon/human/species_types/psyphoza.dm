@@ -19,7 +19,7 @@
 	mutanteyes = /obj/item/organ/eyes/psyphoza
 	mutanttongue = /obj/item/organ/tongue/psyphoza
 
-	mutant_bodyparts = list("psyphoza_cap" = "Portobello", "body_size" = "Normal", "mcolor" = COLOR_WHITE)
+	mutant_organs = list(/obj/item/organ/psyphoza_cap = "Portobello")
 	hair_color_mode = USE_FIXED_MUTANT_COLOR
 
 	bodypart_overrides = list(
@@ -36,11 +36,11 @@
 	/// Weakref to the psychic highlight action given by our eyes
 	var/datum/weakref/ability_weakref
 
-/datum/species/psyphoza/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/psyphoza/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	ability_weakref = WEAKREF(locate(/datum/action/item_action/organ_action/psychic_highlight) in C.actions)
 
-/datum/species/psyphoza/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/psyphoza/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	. = ..()
 	ability_weakref = null
 

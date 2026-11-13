@@ -201,7 +201,7 @@
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -211,7 +211,7 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	owner.update_incapacitated()
@@ -271,14 +271,15 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(usr != owner)
+	if(!.)
 		return
+
 	to_chat(owner, span_notice("You attempt to remove the durathread strand from around your neck."))
 	if(do_after(owner, 3.5 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
 		if(isliving(owner))
-			var/mob/living/L = owner
-			to_chat(owner, span_notice("You successfuly remove the durathread strand."))
-			L.remove_status_effect(/datum/status_effect/strandling)
+			var/mob/living/living_owner = owner
+			to_chat(living_owner , span_notice("You successfuly remove the durathread strand."))
+			living_owner.remove_status_effect(/datum/status_effect/strandling)
 
 /datum/status_effect/syringe
 	id = "syringe"
@@ -996,8 +997,7 @@
 
 /datum/status_effect/ghoul/get_examine_text()
 	var/mob/living/carbon/human/H = owner
-	var/obscured = H.check_obscured_slots()
-	if(!(obscured & ITEM_SLOT_EYES) && !H.glasses) //The examine text is only displayed if the ghoul's eyes are not obscured
+	if(!(H.obscured_slots & HIDEEYES) && !H.glasses) //The examine text is only displayed if the ghoul's eyes are not obscured
 		return span_warning("[owner.p_They()] has a blank, catatonic like stare.")
 
 /atom/movable/screen/alert/status_effect/ghoul
@@ -1276,6 +1276,9 @@
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/ants/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
